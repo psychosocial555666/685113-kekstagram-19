@@ -23,7 +23,7 @@ var createPhotoElement = function () {
       var createComments = function (rand) {
         for (var u = 0; u < rand; u++) {
           var randomMessage = {
-            avatar: 'img/avatar - ' + randomNumber (1, 6) + '.img',
+            avatar: 'img/avatar-' + randomNumber (1, 6) + '.svg',
             message: MESSAGES [randomNumber(0, MESSAGES.length-1)],
             autor: COMMENT_AUTOR [randomNumber(0, COMMENT_AUTOR.length-1)]
           }
@@ -31,10 +31,10 @@ var createPhotoElement = function () {
         }
         return userComments;
       }
-      createComments (randomNumber(1, 25));
+      createComments (randomNumber(5, 10));
     var photoElements = {
       url: 'photos/' + PHOTOS[i] + '.jpg',
-      description: '',
+      description: 'В этом блоке должно быть описание фото, но я не смог придумать=(',
       likes: randomNumber (15, 200),
       comments: userComments
     }
