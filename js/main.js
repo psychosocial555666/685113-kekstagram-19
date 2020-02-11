@@ -3,6 +3,8 @@ function randomNumber(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 }
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
 var PHOTOS = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 var COMMENT_AUTOR = ['Артем', 'Андрей', 'Лиза', 'Юлия Павловна', 'Черный властелин', 'Голум'];
 var MESSAGES = ['Всё отлично!',
@@ -71,7 +73,11 @@ var socialComments = bigPicture.querySelector ('.social__comments')
 var firstPicture = photoElementsArr[0];
 console.log (firstPicture);
 
-bigPicture.classList.remove('hidden');
+var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+var commentCounter = bigPicture.querySelector('.social__comment-count');
+var commentLoader = bigPicture.querySelector('.comments-loader');
+var pageBody = document.querySelector('body');
+
 bigPicture.querySelector ('.big-picture__img img').src = firstPicture.url;
 bigPicture.querySelector ('.likes-count').textContent = firstPicture.likes;
 bigPicture.querySelector ('.comments-count').textContent = firstPicture.comments.length;
@@ -95,11 +101,25 @@ for (var i = 0; i < firstPicture.comments.length; i++) {
   commentFragment.appendChild(newComment);
 }
 commentList.appendChild(commentFragment);
+/*------------Events-and-Validation------------*/
+var onPictureClick = function () {
+  bigPicture.classList.remove('hidden');
+  commentCounter.classList.add('hidden');
+  commentLoader.classList.add('hidden');
+  pageBody.classList.add('modal-open');
+}
 
-var commentCounter = bigPicture.querySelector('.social__comment-count')
-var commentLoader = bigPicture.querySelector('.comments-loader')
-var pageBody = document.querySelector('body')
+var onCancelClick = function () {
+  bigPicture.classList.add('hidden');
+};
 
-commentCounter.classList.add('hidden');
-commentLoader.classList.add('hidden');
-pageBody.classList.add('modal-open');
+var onPictureEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    bigPicture.classList.add('hidden');
+  };
+};
+
+userPicture.addEventListener ('click', onPictureClick);
+
+bigPictureCancel.addEventListener ('click', onCancelClick);
+bigPicture.addEventListener ('keydown', onPictureEscPress);
