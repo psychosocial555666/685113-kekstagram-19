@@ -42,7 +42,7 @@ var createPhotoElement = function () {
   }
   return photoElementsArr;
 }
-console.log (createPhotoElement());
+createPhotoElement();
 
 var userPictureTemplate = document.querySelector ('#picture')
   .content;
@@ -69,7 +69,6 @@ userPicture.appendChild (fragment);
 var bigPicture = document.querySelector ('.big-picture');
 var socialComments = bigPicture.querySelector ('.social__comments')
 var firstPicture = photoElementsArr[0];
-console.log (firstPicture);
 
 var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 var commentCounter = bigPicture.querySelector('.social__comment-count');
@@ -141,29 +140,38 @@ var effectList = document.querySelector('.effects__list');
 var effectLevelValue = document.querySelector('.effect-level__value').value;
 var effectLevelPin = document.querySelector('.effect-level__pin');
 
-console.log (chrome)
-/*---!!!!!!-----*/
-imageEditPopup.classList.remove('hidden');
-/*----!!!!!!!!!----*/
-
 var onInputChange = function () {
   imageEditPopup.classList.remove('hidden');
+  scaleValue.value = '100%';
+  imagePreview.style.transform = 'scale(1)'
 }
 
 var onUploadCancelClick = function () {
   imageEditPopup.classList.add('hidden');
-  form.reset();
+  imagePreview.classList.remove('effects__preview--none');
+  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.classList.remove('effects__preview--sepia');
+  imagePreview.classList.remove('effects__preview--marvin');
+  imagePreview.classList.remove('effects__preview--phobos');
+  imagePreview.classList.remove('effects__preview--heat');
+  uploadForm.reset();
 }
 
 var onEditPopupEscPress = function (evt) {
   if (evt.key === 'Escape') {
     imageEditPopup.classList.add('hidden');
-    form.reset();
+    imagePreview.classList.remove('effects__preview--none');
+    imagePreview.classList.remove('effects__preview--chrome');
+    imagePreview.classList.remove('effects__preview--sepia');
+    imagePreview.classList.remove('effects__preview--marvin');
+    imagePreview.classList.remove('effects__preview--phobos');
+    imagePreview.classList.remove('effects__preview--heat');
   };
 };
 
 var onEffectChgange = function (evt) {
   if (evt.target && evt.target.matches('input[type="radio"]')) {
+    imagePreview.style.filter = '';
     imagePreview.classList.remove('effects__preview--none');
     imagePreview.classList.remove('effects__preview--chrome');
     imagePreview.classList.remove('effects__preview--sepia');
@@ -183,13 +191,20 @@ var original = document.querySelector('.effects__preview--none');
 
 
 var onLevelPinMouseUp = function () {
-  /*chrome.style.grayscale = effectLevelValue/100;
-  sepia.style.sepia = effectLevelValue/100;
-  marvin.style.invert = effectLevelValue + '%';
-  phobos.style.blur = 3*effectLevelValue/100 + 'px';
-  heat.style.brightness = 3*effectLevelValue/100;*/
   if (imagePreview.classList.contains('effects__preview--chrome')) {
-    imagePreview.querySelector('.effects__preview--chrome').style.grayscale = effectLevelValue/100;
+    imagePreview.style.filter = 'grayscale(' + effectLevelValue/100 + ')';
+  }
+  else if (imagePreview.classList.contains('effects__preview--sepia')) {
+    imagePreview.style.filter = 'sepia(' + effectLevelValue/100 + ')';
+  }
+  else if (imagePreview.classList.contains('effects__preview--marvin')) {
+    imagePreview.style.filter = 'invert(' + effectLevelValue + '%)';
+  }
+  else if (imagePreview.classList.contains('effects__preview--phobos')) {
+    imagePreview.style.filter = 'blur(' + 3*effectLevelValue/100 + 'px)';
+  }
+  else if (imagePreview.classList.contains('effects__preview--heat')) {
+    imagePreview.style.filter = 'brightness(' + 3*effectLevelValue/100 + ')';
   }
 }
 
@@ -243,21 +258,50 @@ scaleMinus.addEventListener('click', onScaleMinusClick);
 
 var hashtagInput = document.querySelector('.text__hashtags');
 var hashtagArr = [];
+var uploadBtn = document.querySelector ('.img-upload__submit');
+var uploadForm = document.querySelector ('.img-upload__form')
 
-var onHashtagInput = function () {
+var onUploadBtnSubmit = function (evt) {
+  hashtagArr = [];
+  hashtagInput.setCustomValidity ('')
   hashtagArr = hashtagInput.value.split(' ');
-  for (i = 0; i < hashtagArr.length; i++){
-    var tag = hashtagArr [i];
-    if (tag[0] === '#') {
-      console.log('ok')
-      }
-      else {
-        console.log('try again')
-        }
+  var ifItValid = true;
+  var hashtagArrLow = [];
+  var getLow = function () {
+    for ( var j = 0; j < hashtagArr.length; j++) {
+      var itmLow = hashtagArr[j].toLowerCase();
+      hashtagArrLow.push (itmLow);
     }
+    return hashtagArrLow;
+  }
+  console.log(getLow());
+  for (i = 0; i < hashtagArr.length; i++){
+    var tag = hashtagArrLow [i];
+    if (tag[0] != '#') {
+      ifItValid = false;
+      hashtagInput.setCustomValidity ('Хэштег должен начинаться с "#"');
+    }
+    else if (tag.length < 2 || tag.length >20) {
+      ifItValid = false;
+      hashtagInput.setCustomValidity ('Хэштег должен содержать от 2-х до 20-ти символов');
+    }
+    else if (hashtagArr.length > 5) {
+      ifItValid = false;
+      hashtagInput.setCustomValidity ('Нельзя добавить более пяти хэштегов');
+    }
+    else if (!tag.match(/^[#]+[0-9a-zA-ZА-Яа-яЁё\s]+$/)) {
+      ifItValid = false;
+      hashtagInput.setCustomValidity ('Запрещенный символ');
+    }
+    else if (tag == hashtagArrLow[i - 1] || tag == hashtagArrLow[i - 2] ||tag == hashtagArrLow[i - 3] ||tag == hashtagArrLow[i - 4] ||tag == hashtagArrLow[i - 5]) {
+      evt.preventDefault();
+      hashtagInput.setCustomValidity ('Хэштеги не должны повторяться');
+    }
+    else if (ifItValid == false) {
+      evt.preventDefault();
+      return false;
+    }
+  }
 }
-
-hashtagInput.addEventListener('input', onHashtagInput);
-hashtagInput.addEventListener('invalid', onHashtagInput);
-
-console.log (hashtagArr);
+uploadForm.addEventListener('submit', onUploadBtnSubmit);
+hashtagInput.addEventListener ('input', onUploadBtnSubmit);
