@@ -12,7 +12,7 @@ var MESSAGES = ['Всё отлично!',
                 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
                 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
               ]
-
+/*---------Создание массива фотографий */
 var photoElementsArr = [];
 
 var createPhotoElement = function () {
@@ -43,7 +43,7 @@ var createPhotoElement = function () {
   return photoElementsArr;
 }
 createPhotoElement();
-
+/*---------Вставляем фото в разметку-------------*/
 var userPictureTemplate = document.querySelector ('#picture')
   .content;
 var userPicture = document.querySelector ('.pictures');
@@ -64,7 +64,7 @@ for (var i = 0; i < PHOTOS.length; i++) {
 
 userPicture.appendChild (fragment);
 
-/*-----module3-task3------*/
+/*-----Открытие картинки в большом формате------*/
 
 var bigPicture = document.querySelector ('.big-picture');
 var socialComments = bigPicture.querySelector ('.social__comments')
@@ -99,23 +99,26 @@ for (var i = 0; i < firstPicture.comments.length; i++) {
 }
 commentList.appendChild(commentFragment);
 
-/*------------Events-and-Validation------------*/
+/*------------Обработка событий------------*/
 var ESC_KEY = 'Escape';
 var ENTER_KEY = 'Enter';
-var pictureCard = document.querySelector('.picture');
-
+var pictureCards = document.querySelector('.pictures');
+console.log (pictureCards);
 var onPictureEscPress = function (evt) {
   if (evt.key === 'Escape') {
     bigPicture.classList.add('hidden');
   };
 };
 
-var onPictureClick = function () {
-  bigPicture.classList.remove('hidden');
-  commentCounter.classList.add('hidden');
-  commentLoader.classList.add('hidden');
-  pageBody.classList.add('modal-open');
-
+var onPictureClick = function (evt) {
+  evt.preventDefault();
+  console.log (evt.target);
+  if (evt.target && evt.target.matches('.picture__img')){
+    bigPicture.classList.remove('hidden');
+    commentCounter.classList.add('hidden');
+    commentLoader.classList.add('hidden');
+    pageBody.classList.add('modal-open');
+  }
 }
 
 var onCancelClick = function () {
@@ -125,7 +128,7 @@ var onCancelClick = function () {
   pageBody.classList.remove('modal-open');
 };
 
-pictureCard.addEventListener ('click', onPictureClick);
+pictureCards.addEventListener ('click', onPictureClick);
 
 bigPictureCancel.addEventListener ('click', onCancelClick);
 document.addEventListener ('keydown', onPictureEscPress);
@@ -214,7 +217,7 @@ imageInput.addEventListener ('change', onInputChange);
 uploadCancel.addEventListener ('click', onUploadCancelClick);
 document.addEventListener ('keydown', onEditPopupEscPress);
 
-/*---------scale----*/
+/*---------Изменените размера изображения----*/
 
 var scalePlus = document.querySelector('.scale__control--bigger')
 var scaleMinus = document.querySelector('.scale__control--smaller')
@@ -254,7 +257,7 @@ var onScaleMinusClick = function () {
 scalePlus.addEventListener('click', onScalePlusClick);
 scaleMinus.addEventListener('click', onScaleMinusClick);
 
-/*------------Validation-----*/
+/*------------Валидация-----*/
 
 var hashtagInput = document.querySelector('.text__hashtags');
 var hashtagArr = [];
