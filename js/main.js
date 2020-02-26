@@ -135,7 +135,7 @@ var onPictureClick = function (evt) {
 }
 
 var onPictureEnterPress = function (evt) {
-  if (evt.target && evt.target.matches('.picture__img') && evt.key === ENTER_KEY){
+  if (evt.target && evt.target.matches('.picture__img') && evt.key === 'Enter'){
     evt.preventDefault();
     var photoItem = photoElementsArr[evt.target.name];
     var bigPicture = document.querySelector ('.big-picture');
