@@ -8,6 +8,7 @@
     photoItem.querySelector ('.picture__img').src = userPhoto.url;
     photoItem.querySelector ('.picture__likes').textContent = userPhoto.likes;
     photoItem.querySelector ('.picture__comments').textContent = userPhoto.comments.length;
+    photoItem.querySelector ('.picture').name = itemIndex;
     photoItem.querySelector ('.picture__img').name = itemIndex;
 
     return photoItem;

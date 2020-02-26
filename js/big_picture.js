@@ -60,7 +60,7 @@
   }
 
   var onPictureEnterPress = function (evt) {
-    if (evt.target && evt.target.matches('.picture__img') && evt.key === 'Enter'){
+    if (evt.target && evt.target.matches('.picture') && evt.key === 'Enter'){
       evt.preventDefault();
       var photoItem = window.photoArr.photoElementsArr[evt.target.name];
       var bigPicture = document.querySelector ('.big-picture');
@@ -87,7 +87,7 @@
   }
 
   pictureCards.addEventListener ('click', onPictureClick);
-  pictureCards.querySelector ('.picture').addEventListener ('keydown', onPictureEnterPress);
+  document.addEventListener ('keydown', onPictureEnterPress);
 
   document.addEventListener ('keydown', onPictureEscPress);
   window.bigPicture = {
