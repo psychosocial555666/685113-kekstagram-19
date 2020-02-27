@@ -6,38 +6,39 @@
   var imagePreview = document.querySelector('.img-upload__preview img');
   var uploadForm = document.querySelector('.img-upload__form');
   var scaleValue = document.querySelector('.scale__control--value');
-  var ESC_KEY = 'Escape';
+  var effectLevelPin = document.querySelector('.effect-level__pin');
+  var effectLevelElement = document.querySelector('.effect-level');
+  var effectLevelValue = effectLevelElement.querySelector('.effect-level__value');
+  var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
+
 
   var onInputChange = function () {
     imageEditPopup.classList.remove('hidden');
     scaleValue.value = '100%';
     imagePreview.style.transform = 'scale(1)';
+    window.utils.allEffects.forEach(function (className) {
+      imagePreview.classList.remove(className);
+    });
+    imagePreview.style.filter = '';
+    effectLevelPin.style.left = '100%';
+    effectLevelValue.value = '100';
+    effectLevelDepth. style.width = '100%';
+    uploadCancel.addEventListener('click', uploadPopupClose);
+    document.addEventListener('keydown', function (evt) {
+      window.utils.isEscEvent(evt, uploadPopupClose);
+    });
   };
-
-  var onUploadCancelClick = function () {
+  var uploadPopupClose = function () {
     imageEditPopup.classList.add('hidden');
-    imagePreview.classList.remove('effects__preview--none');
-    imagePreview.classList.remove('effects__preview--chrome');
-    imagePreview.classList.remove('effects__preview--sepia');
-    imagePreview.classList.remove('effects__preview--marvin');
-    imagePreview.classList.remove('effects__preview--phobos');
-    imagePreview.classList.remove('effects__preview--heat');
+    window.utils.allEffects.forEach(function (className) {
+      imagePreview.classList.remove(className);
+    });
+    uploadCancel.removeEventListener('click', uploadPopupClose);
+    document.removeEventListener('keydown', function (evt) {
+      window.utils.isEscEvent(evt, uploadPopupClose);
+    });
     uploadForm.reset();
   };
 
-  var onEditPopupEscPress = function (evt) {
-    if (evt.key === ESC_KEY) {
-      imageEditPopup.classList.add('hidden');
-      imagePreview.classList.remove('effects__preview--none');
-      imagePreview.classList.remove('effects__preview--chrome');
-      imagePreview.classList.remove('effects__preview--sepia');
-      imagePreview.classList.remove('effects__preview--marvin');
-      imagePreview.classList.remove('effects__preview--phobos');
-      imagePreview.classList.remove('effects__preview--heat');
-    }
-  };
-
   imageInput.addEventListener('change', onInputChange);
-  uploadCancel.addEventListener('click', onUploadCancelClick);
-  document.addEventListener('keydown', onEditPopupEscPress);
 })();

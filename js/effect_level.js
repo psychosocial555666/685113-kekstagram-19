@@ -64,12 +64,9 @@
       effectLevelValue.value = '100';
       effectLevelDepth. style.width = '100%';
       imagePreview.style.filter = '';
-      imagePreview.classList.remove('effects__preview--none');
-      imagePreview.classList.remove('effects__preview--chrome');
-      imagePreview.classList.remove('effects__preview--sepia');
-      imagePreview.classList.remove('effects__preview--marvin');
-      imagePreview.classList.remove('effects__preview--phobos');
-      imagePreview.classList.remove('effects__preview--heat');
+      window.utils.allEffects.forEach(function (className) {
+        imagePreview.classList.remove(className);
+      });
       imagePreview.classList.add('effects__preview--' + evt.target.value);
     }
   };

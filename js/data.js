@@ -11,8 +11,8 @@
   ];
   var AVATAR_MIN = 1;
   var AVATAR_MAX = 6;
-  var COMMENTS_MIN = 5;
-  var COMMENTS_MAX = 10;
+  var COMMENTS_MIN = 3;
+  var COMMENTS_MAX = 5;
   var LIKES_MIN = 15;
   var LIKES_MAX = 200;
   var createPhotoElement = function (photosCount) {
