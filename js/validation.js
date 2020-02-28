@@ -3,6 +3,7 @@
   var hashtagInput = document.querySelector('.text__hashtags');
   var hashtagArr = [];
   var uploadForm = document.querySelector('.img-upload__form');
+  var imageEditPopup = document.querySelector('.img-upload__overlay');
 
   var onUploadBtnSubmit = function (evt) {
     hashtagArr = [];
@@ -44,6 +45,30 @@
     }
     return true;
   };
+  uploadForm.addEventListener('submit', function (evt) {
+    var successTemplate = document.querySelector('#success').content;
+    var main = document.querySelector('main');
+    window.upload(new FormData(uploadForm), function () {
+      imageEditPopup.classList.add('hidden');
+      var successMessage = successTemplate.cloneNode(true);
+      var fragment = document.createDocumentFragment();
+      fragment.appendChild(successMessage);
+      main.appendChild(fragment);
+      var successBtn = document.querySelector('.success__button');
+      var successPlate = document.querySelector('.success');
+      var plateClose = function () {
+        successPlate.style.display = 'none';
+      }
+      successBtn.addEventListener('click', plateClose);
+      document.addEventListener('keydown', function (evtClose) {
+        window.utils.isEscEvent(evtClose, plateClose);
+      });
+      successBtn.addEventListener('keydown', function (evtClose) {
+        window.utils.isEnterEvent(evtClose, plateClose);
+      });
+    });
+    evt.preventDefault();
+  });
   uploadForm.addEventListener('submit', onUploadBtnSubmit);
   hashtagInput.addEventListener('input', onUploadBtnSubmit);
 })();
