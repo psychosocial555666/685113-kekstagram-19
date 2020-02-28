@@ -14,12 +14,15 @@
     return photoItem;
   };
 
-  var fragment = document.createDocumentFragment();
+  window.load(function (photos) {
+    var fragment = document.createDocumentFragment();
 
-  window.photoArr.photoElementsArr.forEach(function (item, i) {
-    var photoElement = renderPhoto(item, i);
-    fragment.appendChild(photoElement);
+    photos.forEach(function (item, i) {
+      var photoElement = renderPhoto(item, i);
+      fragment.appendChild(photoElement);
+    });
+
+    userPicture.appendChild(fragment);
   });
 
-  userPicture.appendChild(fragment);
 })();
