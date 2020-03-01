@@ -38,11 +38,11 @@
     });
     uploadForm.reset();
   };
-
-  uploadForm.addEventListener('submit', function (evt) {
+  var onDataLoad = function (evt) {
     var successTemplate = document.querySelector('#success').content;
+    var errorTemplate = document.querySelector('#error').content;
     var main = document.querySelector('main');
-    window.upload(new FormData(uploadForm), function () {
+    var ifLoadSuccess = function () {
       imageEditPopup.classList.add('hidden');
       uploadForm.reset();
       var successMessage = successTemplate.cloneNode(true);
@@ -84,9 +84,54 @@
       successBtn.addEventListener('keydown', function (evtClose) {
         window.utils.isEnterEvent(evtClose, plateClose);
       });
-    });
+    };
+    var ifLoadError = function () {
+      imageEditPopup.classList.add('hidden');
+      uploadForm.reset();
+      var errorMessage = errorTemplate.cloneNode(true);
+      var fragment = document.createDocumentFragment();
+      fragment.appendChild(errorMessage);
+      main.appendChild(fragment);
+      var errorBtn = document.querySelector('.error__button');
+      var errorPlate = document.querySelector('.error');
+      var plateClose = function () {
+        errorPlate.remove();
+        errorPlate.removeEventListener('click', innerClose);
+        errorBtn.removeEventListener('click', plateClose);
+        document.removeEventListener('keydown', function (evtClose) {
+          window.utils.isEscEvent(evtClose, plateClose);
+        });
+        errorBtn.removeEventListener('keydown', function (evtClose) {
+          window.utils.isEnterEvent(evtClose, plateClose);
+        });
+      };
+      var innerClose = function (evtInner) {
+        if (evtInner.target && !evtInner.target.matches('.error__inner') && !evtInner.target.matches('.success__title') || evtInner.target.matches('.success__button')) {
+          errorPlate.remove();
+          uploadForm.reset();
+          errorPlate.removeEventListener('click', innerClose);
+          errorBtn.removeEventListener('click', plateClose);
+          document.removeEventListener('keydown', function (evtClose) {
+            window.utils.isEscEvent(evtClose, plateClose);
+          });
+          errorBtn.removeEventListener('keydown', function (evtClose) {
+            window.utils.isEnterEvent(evtClose, plateClose);
+          });
+        }
+      };
+      errorPlate.addEventListener('click', innerClose);
+      errorBtn.addEventListener('click', plateClose);
+      document.addEventListener('keydown', function (evtClose) {
+        window.utils.isEscEvent(evtClose, plateClose);
+      });
+      errorBtn.addEventListener('keydown', function (evtClose) {
+        window.utils.isEnterEvent(evtClose, plateClose);
+      });
+    };
+    window.upload(new FormData(uploadForm), ifLoadSuccess, ifLoadError);
     evt.preventDefault();
-  });
+  };
+  uploadForm.addEventListener('submit', onDataLoad);
 
   imageInput.addEventListener('change', onInputChange);
 })();
