@@ -8,4 +8,3 @@
     getRandomNumber: randomNumber
   };
 })();
-/* поправил*/

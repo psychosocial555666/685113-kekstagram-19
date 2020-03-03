@@ -13,16 +13,16 @@
 
     return photoItem;
   };
-
-  window.load(function (photos) {
+  var renderPictures = function (data) {
     var fragment = document.createDocumentFragment();
 
-    photos.forEach(function (item, i) {
+    data.forEach(function (item, i) {
       var photoElement = renderPhoto(item, i);
       fragment.appendChild(photoElement);
     });
-
     userPicture.appendChild(fragment);
-  });
-
+  };
+  window.gallery = {
+    renderPictures: renderPictures
+  };
 })();
