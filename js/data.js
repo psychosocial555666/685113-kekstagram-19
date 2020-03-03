@@ -3,10 +3,10 @@
   var pictures = [];
   var successHandler = function (photos) {
     pictures = photos;
-    window.gallery.renderPictures(pictures);
     window.data = {
       picturesArr: pictures
     };
+    window.gallery.renderPictures(window.data.picturesArr);
   };
 
   var errorHandler = function (errorMessage) {
