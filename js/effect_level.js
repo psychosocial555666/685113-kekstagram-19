@@ -7,6 +7,7 @@
   var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
   var imagePreview = document.querySelector('.img-upload__preview img');
   var effectList = document.querySelector('.effects__list');
+  effectLevelElement.classList.add('hidden');
   var onPinDown = function (evt) {
     evt.preventDefault();
 
@@ -68,6 +69,10 @@
         imagePreview.classList.remove(className);
       });
       imagePreview.classList.add('effects__preview--' + evt.target.value);
+      effectLevelElement.classList.remove('hidden');
+      if (evt.target.value === 'none') {
+        effectLevelElement.classList.add('hidden');
+      }
     }
   };
   effectList.addEventListener('change', onEffectChgange);
