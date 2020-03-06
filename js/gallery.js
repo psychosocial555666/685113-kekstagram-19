@@ -13,13 +13,16 @@
 
     return photoItem;
   };
+  var renderPictures = function (data) {
+    var fragment = document.createDocumentFragment();
 
-  var fragment = document.createDocumentFragment();
-
-  window.photoArr.photoElementsArr.forEach(function (item, i) {
-    var photoElement = renderPhoto(item, i);
-    fragment.appendChild(photoElement);
-  });
-
-  userPicture.appendChild(fragment);
+    data.forEach(function (item, i) {
+      var photoElement = renderPhoto(item, i);
+      fragment.appendChild(photoElement);
+    });
+    userPicture.appendChild(fragment);
+  };
+  window.gallery = {
+    renderPictures: renderPictures
+  };
 })();
