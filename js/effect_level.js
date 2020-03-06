@@ -7,6 +7,14 @@
   var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
   var imagePreview = document.querySelector('.img-upload__preview img');
   var effectList = document.querySelector('.effects__list');
+  var effectLevels = {
+    'effects__preview--none': '',
+    'effects__preview--chrome': 'grayscale(' + effectLevelValue.value / 100 + ')',
+    'effects__preview--sepia': 'sepia(' + effectLevelValue.value / 100 + ')',
+    'effects__preview--marvin': 'invert(' + effectLevelValue.value + '%)',
+    'effects__preview--phobos': 'blur(' + 3 * effectLevelValue.value / 100 + 'px)',
+    'effects__preview--heat': 'brightness(' + 3 * effectLevelValue.value / 100 + ')'
+  };
   effectLevelElement.classList.add('hidden');
   var onPinDown = function (evt) {
     evt.preventDefault();
@@ -35,18 +43,9 @@
       effectLevelPin.style.left = setEffectLevel(pinCoord) + '%';
       effectLevelValue.value = setEffectLevel(pinCoord);
       effectLevelDepth. style.width = setEffectLevel(pinCoord) + '%';
+
       (function applyEffectLevel() {
-        if (imagePreview.classList.contains('effects__preview--chrome')) {
-          imagePreview.style.filter = 'grayscale(' + effectLevelValue.value / 100 + ')';
-        } else if (imagePreview.classList.contains('effects__preview--sepia')) {
-          imagePreview.style.filter = 'sepia(' + effectLevelValue.value / 100 + ')';
-        } else if (imagePreview.classList.contains('effects__preview--marvin')) {
-          imagePreview.style.filter = 'invert(' + effectLevelValue.value + '%)';
-        } else if (imagePreview.classList.contains('effects__preview--phobos')) {
-          imagePreview.style.filter = 'blur(' + 3 * effectLevelValue.value / 100 + 'px)';
-        } else if (imagePreview.classList.contains('effects__preview--heat')) {
-          imagePreview.style.filter = 'brightness(' + 3 * effectLevelValue.value / 100 + ')';
-        }
+        imagePreview.style.filter = effectLevels[imagePreview.className];
       })();
     };
     var onPinUp = function (upEvt) {

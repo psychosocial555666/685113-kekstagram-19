@@ -5,6 +5,8 @@
 
   var openedPhotoItem = null;
   var commentLoader = document.querySelector('.comments-loader');
+  var pictureCards = document.querySelector('.pictures');
+
   var changePicture = (function (bigPicture, currentPicture, comments) {
     bigPicture.querySelector('.big-picture__img img').src = currentPicture.url;
     bigPicture.querySelector('.likes-count').textContent = currentPicture.likes;
@@ -34,8 +36,6 @@
     }
     commentList.appendChild(commentFragment);
   });
-
-  var pictureCards = document.querySelector('.pictures');
 
   var onCommentsLoaderPress = function () {
     var commentsQuantity = document.querySelectorAll('.social__comment').length + COMMENTS_STEP;
