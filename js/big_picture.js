@@ -6,8 +6,9 @@
   var openedPhotoItem = null;
   var commentLoader = document.querySelector('.comments-loader');
   var pictureCards = document.querySelector('.pictures');
+  var currentCommentNumber = document.querySelector('.social__comment-count');
 
-  var changePicture = (function (bigPicture, currentPicture, comments) {
+  var changePicture = (function (bigPicture, currentPicture, commentsLength) {
     bigPicture.querySelector('.big-picture__img img').src = currentPicture.url;
     bigPicture.querySelector('.likes-count').textContent = currentPicture.likes;
     bigPicture.querySelector('.comments-count').textContent = currentPicture.comments.length;
@@ -17,7 +18,11 @@
 
     commentList.innerHTML = '';
 
-    for (var i = 0; i < comments; i++) {
+    if (currentPicture.comments.length < commentsLength) {
+      commentsLength = currentPicture.comments.length;
+      commentLoader.classList.add('hidden');
+    }
+    for (var i = 0; i < commentsLength; i++) {
       var newComment = document.createElement('li');
       newComment.className = 'social__comment';
       var commentImage = document.createElement('img');
@@ -33,13 +38,14 @@
       var textNode = document.createTextNode(currentPicture.comments[i].message);
       commentText.appendChild(textNode);
       commentFragment.appendChild(newComment);
+      currentCommentNumber.innerHTML = commentsLength + ' из <span class="comments-count"> ' + currentPicture.comments.length + '</span> комментариев';
     }
     commentList.appendChild(commentFragment);
   });
 
   var onCommentsLoaderPress = function () {
     var commentsQuantity = document.querySelectorAll('.social__comment').length + COMMENTS_STEP;
-    if (commentsQuantity > openedPhotoItem.comments.length || openedPhotoItem.comments.length < COMMENTS_QUANTITY) {
+    if (commentsQuantity >= openedPhotoItem.comments.length || openedPhotoItem.comments.length < COMMENTS_QUANTITY) {
       commentsQuantity = openedPhotoItem.comments.length;
       commentLoader.classList.add('hidden');
     }
@@ -49,7 +55,7 @@
   var onBigPictureOpen = function (evtOpen) {
     if (evtOpen.target && evtOpen.target.matches('.picture__img') || evtOpen.target.matches('.picture')) {
       evtOpen.preventDefault();
-      openedPhotoItem = window.data.picturesArr[evtOpen.target.name];
+      openedPhotoItem = window.filter.currentArr[evtOpen.target.name];
       var bigPicture = document.querySelector('.big-picture');
       var pageBody = document.querySelector('body');
       window.bigPicture.changePicture(bigPicture, openedPhotoItem, COMMENTS_QUANTITY);

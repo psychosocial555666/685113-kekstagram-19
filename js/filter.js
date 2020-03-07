@@ -12,8 +12,9 @@
     getDefaultPictures: function (arr) {
       return arr;
     },
-    getRandomPictures: function (arr, randomPhotoNum) {
-      randomPhotoNum = RANDOM_PHOTOS_NUM;
+
+    getRandomPictures: function (arr) {
+      var randomPhotoNum = RANDOM_PHOTOS_NUM;
       if (randomPhotoNum > arr.length) {
         randomPhotoNum = arr.length;
       }
@@ -73,15 +74,19 @@
       document.querySelectorAll('.picture').forEach(function (item) {
         item.remove();
       });
-      window.gallery.renderPictures(filterMethod(window.data.picturesArr));
+      switchClass(imgFiltersButtons, button, BUTTON_ACTIVE_CLASS);
+      currentArr.splice(0, currentArr.length);
+      var filtredArr = filterMethod(window.data.picturesArr);
+      filtredArr.forEach(function (item) {
+        currentArr.push(item);
+      });
+      window.gallery.renderPictures(currentArr);
     });
-    switchClass(imgFiltersButtons, button, BUTTON_ACTIVE_CLASS);
-    currentArr = filterMethod(window.data.picturesArr);
-    window.filter = {
-      currentArr: currentArr
-    };
   };
   imgFiltersButtons.forEach(function (item) {
     item.addEventListener('click', onImgFiltersButtonsClick);
   });
+  window.filter = {
+    currentArr: currentArr
+  };
 })();

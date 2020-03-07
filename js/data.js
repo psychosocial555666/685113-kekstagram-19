@@ -5,12 +5,14 @@
 
 
   var successHandler = function (photos) {
-    pictures = photos;
-    window.gallery.renderPictures(pictures);
+    pictures.splice(0, pictures.length);
+    window.filter.currentArr.splice(0, window.filter.currentArr.length);
+    photos.forEach(function (item) {
+      pictures.push(item);
+      window.filter.currentArr.push(item);
+    });
+    window.gallery.renderPictures(window.filter.currentArr);
     imageFilter.classList.remove('img-filters--inactive');
-    window.data = {
-      picturesArr: pictures
-    };
   };
 
   var errorHandler = function (errorMessage) {
@@ -26,4 +28,8 @@
   };
 
   window.load(successHandler, errorHandler);
+
+  window.data = {
+    picturesArr: pictures
+  };
 })();

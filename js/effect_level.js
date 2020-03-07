@@ -7,14 +7,6 @@
   var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
   var imagePreview = document.querySelector('.img-upload__preview img');
   var effectList = document.querySelector('.effects__list');
-  var effectLevels = {
-    'effects__preview--none': '',
-    'effects__preview--chrome': 'grayscale(' + effectLevelValue.value / 100 + ')',
-    'effects__preview--sepia': 'sepia(' + effectLevelValue.value / 100 + ')',
-    'effects__preview--marvin': 'invert(' + effectLevelValue.value + '%)',
-    'effects__preview--phobos': 'blur(' + 3 * effectLevelValue.value / 100 + 'px)',
-    'effects__preview--heat': 'brightness(' + 3 * effectLevelValue.value / 100 + ')'
-  };
   effectLevelElement.classList.add('hidden');
   var onPinDown = function (evt) {
     evt.preventDefault();
@@ -43,6 +35,14 @@
       effectLevelPin.style.left = setEffectLevel(pinCoord) + '%';
       effectLevelValue.value = setEffectLevel(pinCoord);
       effectLevelDepth. style.width = setEffectLevel(pinCoord) + '%';
+      var effectLevels = {
+        'effects__preview--none': '',
+        'effects__preview--chrome': 'grayscale(' + effectLevelValue.value / 100 + ')',
+        'effects__preview--sepia': 'sepia(' + effectLevelValue.value / 100 + ')',
+        'effects__preview--marvin': 'invert(' + effectLevelValue.value + '%)',
+        'effects__preview--phobos': 'blur(' + 3 * effectLevelValue.value / 100 + 'px)',
+        'effects__preview--heat': 'brightness(' + 3 * effectLevelValue.value / 100 + ')'
+      };
 
       (function applyEffectLevel() {
         imagePreview.style.filter = effectLevels[imagePreview.className];
