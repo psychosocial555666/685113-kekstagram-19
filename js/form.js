@@ -17,6 +17,7 @@
     imageEditPopup.classList.remove('hidden');
     scaleValue.value = '100%';
     imagePreview.style.transform = 'scale(1)';
+    effectLevelElement.classList.add('hidden');
     window.utils.allEffects.forEach(function (className) {
       imagePreview.classList.remove(className);
     });
