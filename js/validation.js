@@ -5,6 +5,7 @@
   var hashtagArr = [];
   var commentArr = [];
   var uploadForm = document.querySelector('.img-upload__form');
+  var imageInput = document.querySelector('.img-upload__input');
 
   var onUploadBtnSubmit = function (evt) {
     hashtagArr = [];
@@ -65,7 +66,9 @@
     }
     return true;
   };
+  imageInput.addEventListener('change', onUploadBtnSubmit);
   uploadForm.addEventListener('submit', onUploadBtnSubmit);
   hashtagInput.addEventListener('input', onUploadBtnSubmit);
+  hashtagInput.addEventListener('change', onUploadBtnSubmit);
   commentInput.addEventListener('input', onUploadBtnSubmit);
 })();

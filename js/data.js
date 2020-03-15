@@ -1,12 +1,18 @@
 'use strict';
 (function () {
   var pictures = [];
+  var imageFilter = document.querySelector('.img-filters');
+
+
   var successHandler = function (photos) {
-    pictures = photos;
-    window.data = {
-      picturesArr: pictures
-    };
-    window.gallery.renderPictures(window.data.picturesArr);
+    pictures.splice(0, pictures.length);
+    window.filter.currentArr.splice(0, window.filter.currentArr.length);
+    photos.forEach(function (item) {
+      pictures.push(item);
+      window.filter.currentArr.push(item);
+    });
+    window.gallery.renderPictures(window.filter.currentArr);
+    imageFilter.classList.remove('img-filters--inactive');
   };
 
   var errorHandler = function (errorMessage) {
@@ -22,4 +28,8 @@
   };
 
   window.load(successHandler, errorHandler);
+
+  window.data = {
+    picturesArr: pictures
+  };
 })();
