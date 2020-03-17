@@ -7,7 +7,9 @@
   var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
   var imagePreview = document.querySelector('.img-upload__preview img');
   var effectList = document.querySelector('.effects__list');
+
   effectLevelElement.classList.add('hidden');
+
   var onPinDown = function (evt) {
     evt.preventDefault();
 
@@ -16,13 +18,17 @@
     };
     var onPinMove = function (moveEvt) {
       moveEvt.preventDefault();
+
       var shift = {
         x: startCoords.x - moveEvt.clientX
       };
+
       startCoords = {
         x: moveEvt.clientX
       };
+
       var pinCoord = effectLevelPin.offsetLeft - shift.x;
+
       var setEffectLevel = function (delta) {
         var procent = Math.round((delta * 100) / effectLevelLine.offsetWidth);
         if (procent < 0) {
@@ -32,9 +38,11 @@
         }
         return procent;
       };
+
       effectLevelPin.style.left = setEffectLevel(pinCoord) + '%';
       effectLevelValue.value = setEffectLevel(pinCoord);
-      effectLevelDepth. style.width = setEffectLevel(pinCoord) + '%';
+      effectLevelDepth.style.width = setEffectLevel(pinCoord) + '%';
+
       var effectLevels = {
         'effects__preview--none': '',
         'effects__preview--chrome': 'grayscale(' + effectLevelValue.value / 100 + ')',
@@ -48,21 +56,25 @@
         imagePreview.style.filter = effectLevels[imagePreview.className];
       })();
     };
+
     var onPinUp = function (upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', onPinMove);
       document.removeEventListener('mouseup', onPinUp);
     };
+
     document.addEventListener('mousemove', onPinMove);
     document.addEventListener('mouseup', onPinUp);
   };
+
   effectLevelPin.addEventListener('mousedown', onPinDown);
+
   var onEffectChgange = function (evt) {
     if (evt.target && evt.target.matches('input[type="radio"]')) {
       effectLevelPin.style.left = '100%';
       effectLevelValue.value = '100';
-      effectLevelDepth. style.width = '100%';
+      effectLevelDepth.style.width = '100%';
       imagePreview.style.filter = '';
       window.utils.allEffects.forEach(function (className) {
         imagePreview.classList.remove(className);
@@ -74,5 +86,6 @@
       }
     }
   };
+
   effectList.addEventListener('change', onEffectChgange);
 })();
