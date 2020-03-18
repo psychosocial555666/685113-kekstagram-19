@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 'use strict';
 (function () {
 
