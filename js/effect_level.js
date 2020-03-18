@@ -70,16 +70,19 @@
 
   effectLevelPin.addEventListener('mousedown', onPinDown);
 
+  var currentEffect = '.effects__preview--none';
+
   var onEffectChgange = function (evt) {
     if (evt.target && evt.target.matches('input[type="radio"]')) {
       effectLevelPin.style.left = '100%';
       effectLevelValue.value = '100';
       effectLevelDepth.style.width = '100%';
       imagePreview.style.filter = '';
-      window.utils.allEffects.forEach(function (className) {
-        imagePreview.classList.remove(className);
-      });
+
+      imagePreview.classList.remove(currentEffect);
       imagePreview.classList.add('effects__preview--' + evt.target.value);
+      currentEffect = imagePreview.className;
+
       effectLevelElement.classList.remove('hidden');
       if (evt.target.value === 'none') {
         effectLevelElement.classList.add('hidden');

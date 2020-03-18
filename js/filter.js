@@ -21,7 +21,7 @@
       var copyArray = arr.slice();
       var resultArray = [];
       for (var i = 0; i < randomPhotoNum; i++) {
-        resultArray.push(copyArray.splice(window.random.getRandomNumber(0, copyArray.length - 1), 1)[0]);
+        resultArray.push(copyArray.splice(window.utils.getRandomNumber(0, copyArray.length - 1), 1)[0]);
       }
 
       return resultArray;

@@ -1,17 +1,18 @@
 'use strict';
 (function () {
-  var imageInput = document.querySelector('.img-upload__input');
-  var imageEditPopup = document.querySelector('.img-upload__overlay');
-  var uploadCancel = document.querySelector('.img-upload__cancel');
-  var imagePreview = document.querySelector('.img-upload__preview img');
   var uploadForm = document.querySelector('.img-upload__form');
-  var scaleValue = document.querySelector('.scale__control--value');
-  var effectLevelPin = document.querySelector('.effect-level__pin');
-  var effectLevelElement = document.querySelector('.effect-level');
+
+  var imageInput = uploadForm.querySelector('.img-upload__input');
+  var imageEditPopup = uploadForm.querySelector('.img-upload__overlay');
+  var uploadCancel = uploadForm.querySelector('.img-upload__cancel');
+  var imagePreview = uploadForm.querySelector('.img-upload__preview img');
+  var scaleValue = uploadForm.querySelector('.scale__control--value');
+  var effectLevelPin = uploadForm.querySelector('.effect-level__pin');
+  var effectLevelElement = uploadForm.querySelector('.effect-level');
   var effectLevelValue = effectLevelElement.querySelector('.effect-level__value');
   var effectLevelDepth = effectLevelElement.querySelector('.effect-level__depth');
-  var hashtagInput = document.querySelector('.text__hashtags');
-  var commentInput = document.querySelector('.text__description');
+  var hashtagInput = uploadForm.querySelector('.text__hashtags');
+  var commentInput = uploadForm.querySelector('.text__description');
 
   var onPopupEscKeydown = function (evt) {
     window.utils.isEscEvent(evt, onUploadPopupClose);
@@ -140,7 +141,7 @@
       errorBtn.addEventListener('keydown', onPlateEnterKeydown);
     };
 
-    window.upload(new FormData(uploadForm), ifLoadSuccess, ifLoadError);
+    window.backend.upload(ifLoadSuccess, ifLoadError, new FormData(uploadForm));
     evt.preventDefault();
   };
 

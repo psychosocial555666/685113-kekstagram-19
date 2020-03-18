@@ -4,6 +4,7 @@
   var MIN_HASHTAG_LENGTH = 2;
   var MAX_HASHTAG_LENGTH = 20;
   var MAX_HASHTAG_QUANTITY = 5;
+  var MAX_COMMENT_LENGTH = 140;
   var WRONG_SIMBOL_MATCH = /^[#]+[0-9a-zA-ZА-Яа-яЁё\s]+$/;
 
   var hashtagInput = document.querySelector('.text__hashtags');
@@ -71,7 +72,7 @@
     commentInput.style.boxShadow = '';
     commentArr = commentInput.value.split('');
 
-    if (commentArr.length > 140) {
+    if (commentArr.length > MAX_COMMENT_LENGTH) {
       evt.preventDefault();
       commentInput.setCustomValidity('Комментарий не должен быть длиннее 140 символов');
       commentInput.style.boxShadow = '0px 0px 5px 3px #fc120c inset';

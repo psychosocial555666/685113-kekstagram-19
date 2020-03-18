@@ -17,6 +17,11 @@
     var commentList = bigPicture.querySelector('.social__comments');
     var commentFragment = document.createDocumentFragment();
 
+    if (currentPicture.comments.length < commentsLength) {
+      commentsLength = currentPicture.comments.length;
+      commentLoader.classList.add('hidden');
+    }
+
     currentCommentNumber.innerHTML = '';
     var renderedCount = document.createElement('span');
     var renderedCountText = document.createTextNode(commentsLength + ' из ');
@@ -29,11 +34,6 @@
     currentCommentNumber.appendChild(commonCount);
 
     commentList.innerHTML = '';
-
-    if (currentPicture.comments.length < commentsLength) {
-      commentsLength = currentPicture.comments.length;
-      commentLoader.classList.add('hidden');
-    }
 
     for (var i = 0; i < commentsLength; i++) {
       var newComment = document.createElement('li');
