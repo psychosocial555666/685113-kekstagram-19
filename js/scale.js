@@ -18,8 +18,8 @@
       scaleValue.value = SCALE_MAX + '%';
       imagePreview.style.transform = 'scale(' + SCALE_MAX / 100 + ')';
     } else {
-      scaleValue.value = (parseInt(scaleValue.value)) + SCALE_STEP + '%';
-      imagePreview.style.transform = 'scale(' + (parseInt(scaleValue.value) / 100) + ')';
+      scaleValue.value = (parseInt(scaleValue.value, 10)) + SCALE_STEP + '%';
+      imagePreview.style.transform = 'scale(' + (parseInt(scaleValue.value, 10) / 100) + ')';
     }
   };
 
@@ -28,8 +28,8 @@
       scaleValue.value = SCALE_MIN + '%';
       imagePreview.style.transform = 'scale(' + SCALE_MIN / 100 + ')';
     } else {
-      scaleValue.value = (parseInt(scaleValue.value)) - SCALE_STEP + '%';
-      imagePreview.style.transform = 'scale(' + (parseInt(scaleValue.value) / 100) + ')';
+      scaleValue.value = (parseInt(scaleValue.value, 10)) - SCALE_STEP + '%';
+      imagePreview.style.transform = 'scale(' + (parseInt(scaleValue.value, 10) / 100) + ')';
     }
   };
 
