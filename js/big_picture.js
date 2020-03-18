@@ -99,7 +99,7 @@
     document.querySelector('body').classList.remove('modal-open');
 
     var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-    
+
     bigPictureCancel.addEventListener('click', onBigPictureClose);
     document.removeEventListener('keydown', function (evt) {
       window.utils.isEscEvent(evt, onBigPictureClose);

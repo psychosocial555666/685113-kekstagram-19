@@ -8,8 +8,10 @@
 
   var hashtagInput = document.querySelector('.text__hashtags');
   var commentInput = document.querySelector('.text__description');
+
   var hashtagArr = [];
   var commentArr = [];
+
   var uploadForm = document.querySelector('.img-upload__form');
   var imageInput = document.querySelector('.img-upload__input');
 
